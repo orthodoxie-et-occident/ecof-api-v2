@@ -4,12 +4,12 @@ import { applyFrenchTypography } from "../../shared/utils/typography"
 
 export async function getVita(id: string) {
   const vita = await getVitaFromDb(id)
-  return (
-    vita?.map((row) => ({
-      ...row,
-      v_short: applyFrenchTypography(row.v_short),
-      v_long: mdToHtml(applyFrenchTypography(row.v_long)),
-      v_liturgy: mdToHtml(applyFrenchTypography(row.v_liturgy)),
-    })) ?? null
-  )
+  const row = vita?.[0]
+  if (!row) return null
+  return {
+    ...row,
+    v_short: applyFrenchTypography(row.v_short),
+    v_long: mdToHtml(applyFrenchTypography(row.v_long)),
+    v_liturgy: mdToHtml(applyFrenchTypography(row.v_liturgy)),
+  }
 }
