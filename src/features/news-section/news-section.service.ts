@@ -5,8 +5,9 @@ import { applyFrenchTypography } from "../../shared/utils/typography"
 export async function getNewsById(id: string) {
   const news = await getNewsByIdFromDb(id)
   if (!news) return null
+  const { content, ...rest } = news
   return {
-    ...news,
-    content: mdToHtml(applyFrenchTypography(news.content)),
+    ...rest,
+    text: mdToHtml(applyFrenchTypography(content)),
   }
 }
