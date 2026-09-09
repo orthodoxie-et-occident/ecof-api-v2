@@ -2,4 +2,4 @@
 // @baseUrl = api-v2.ecof.app
 
 ### PARISH
-GET {{baseUrl}}/calendar/2026-07-30
+GET {{baseUrl}}/calendar/2026-09-09

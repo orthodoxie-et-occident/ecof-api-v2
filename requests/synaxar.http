@@ -5,4 +5,4 @@
 GET {{baseUrl}}/synaxar
 
 ### VITA
-GET {{baseUrl}}/synaxar/94
+GET {{baseUrl}}/synaxar/1
