@@ -1,5 +1,4 @@
 import { getScriptureReading as getScriptureReadingFromDb } from "./reading.repository"
-import { applyFrenchTypography } from "../../shared/utils/typography"
 import { mdToHtml } from "../../shared/utils/markdown"
 
 export async function getScriptureReading(id: string) {
@@ -7,6 +6,6 @@ export async function getScriptureReading(id: string) {
   if (!reading) return null
   return {
     ...reading,
-    reading: mdToHtml(applyFrenchTypography(reading.reading)),
+    reading: mdToHtml(reading.reading),
   }
 }

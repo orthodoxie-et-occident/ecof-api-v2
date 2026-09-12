@@ -45,11 +45,6 @@ export interface ParishInfo {
   events: ParishEvent[]
 }
 
-/**
- * node-ical typpe summary/description/location comme `ParameterValue`
- * (string, ou `{ val, params }` si l'ICS porte des paramètres, ex: LANGUAGE).
- * On normalise systématiquement en string pour le reste du code.
- */
 function toText(value: ParameterValue | undefined): string {
   if (value === undefined) return ""
   if (typeof value === "string") return value
@@ -76,20 +71,6 @@ function pad2(n: number): string {
   return String(n).padStart(2, "0")
 }
 
-/**
- * Convertit une Date JS en chaîne "locale" (sans fuseau) au format
- * YYYY-MM-DDTHH:mm:ss, utilisée uniquement pour trier/comparer les événements
- * entre eux (comme dans la version ical.js).
- *
- * - Événement "journée entière" (dateOnly) : node-ical construit ces dates
- *   sur le calendrier *local* du serveur (getFullYear/getMonth/getDate),
- *   sans lien avec un fuseau horaire — il ne faut donc surtout pas passer
- *   par toISOString() ou par des getters UTC, sous peine de décaler le jour.
- *   On lit donc les composants avec les getters locaux, à l'identique.
- * - Événement avec heure : node-ical résout déjà correctement l'instant UTC
- *   (via les VTIMEZONE / TZID de l'ics), on formate juste cet instant dans
- *   le fuseau Europe/Paris pour affichage.
- */
 function dateToString(date: Date, isFullDay: boolean): string {
   if (isFullDay) {
     return `${date.getFullYear()}-${pad2(date.getMonth() + 1)}-${pad2(date.getDate())}T00:00:00`
@@ -126,13 +107,6 @@ interface BuildEventInput {
   isFullDay: boolean
 }
 
-/**
- * Construit l'objet événement final à partir d'une instance renvoyée par
- * node-ical (qu'elle vienne d'un event simple ou de expandRecurringEvent).
- * Comme pour la version ical.js : le DTEND d'un événement "journée entière"
- * est EXCLUSIF selon la norme iCal, on retire donc 1 jour pour obtenir une
- * date de fin affichable et inclusive.
- */
 function buildEvent({
   summary,
   description,
