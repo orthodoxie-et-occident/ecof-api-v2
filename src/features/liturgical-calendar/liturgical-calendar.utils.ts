@@ -1,12 +1,15 @@
-// Liturgical calendar utilities
-// - getTemporalIndex(date)
-// - getLiturgicalDates(year)
-// - getEasterDate(year)
+// LITURGICAL CALENDAR UTILITY FUNCTIONS
+// getTemporalIndex(date)
+// getSanctoralIndex(date)
+// getLiturgicalDates(year)
+// getEasterDate(year)
 
+/**
+ * Return temporal index for a given date depending of liturgical season
+ */
 export function getTemporalIndex(dateStr: string): number {
   const date = Temporal.PlainDate.from(dateStr)
   const { year } = date
-
   const {
     septuagesimaSunday,
     christmas,
@@ -14,10 +17,8 @@ export function getTemporalIndex(dateStr: string): number {
     sundayInTheOctaveOfChristmas,
     previousSundayInTheOctaveOfChristmas,
   } = getLiturgicalDates(year)
-
   let seasonIndex = 0
   let dayIndex = 0
-
   if (
     Temporal.PlainDate.compare(date, penultimateSundayAfterPentecost) > 0 &&
     Temporal.PlainDate.compare(date, christmas) <= 0
@@ -48,11 +49,20 @@ export function getTemporalIndex(dateStr: string): number {
         largestUnit: "days",
       }).days + 1
   }
-
   return seasonIndex + dayIndex
 }
 
-export function getLiturgicalDates(year: number) {
+/**
+ * Return sanctoral index for a given date
+ */
+export function getSanctoralIndex(month: number, day: number) {
+  return 10000 + month * 100 + day
+}
+
+/**
+ * Return all liturgical key dates for a given year
+ */
+function getLiturgicalDates(year: number) {
   // Easter Sunday
   const easter = getEasterDate(year)
   // Septuagesima Sunday 9 weeks before Easter Sunday
@@ -99,6 +109,9 @@ export function getLiturgicalDates(year: number) {
   }
 }
 
+/**
+ * Return Easter date for a given year
+ */
 export function getEasterDate(year: number): Temporal.PlainDate {
   const n = year % 19
   const c = Math.floor(year / 100)

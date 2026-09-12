@@ -11,13 +11,16 @@ export function mdToHtml(text: string | null | undefined): string | null {
 function addFigcaptions(html: string): string {
   return html.replace(
     /<img([^>]*?)\stitle="([^"]*)"([^>]*)>/g,
-    (_match, before, title, after) => `<figure><img${before}${after}><figcaption>${title}</figcaption></figure>`
+    (_match, before, title, after) =>
+      `<figure><img${before}${after}><figcaption>${title}</figcaption></figure>`,
   )
 }
 
 function applyTypographyOutsideTags(html: string): string {
   return html
     .split(/(<[^>]+>)/g)
-    .map(segment => (segment.startsWith('<') ? segment : (applyFrenchTypography(segment) ?? segment)))
-    .join('')
+    .map((segment) =>
+      segment.startsWith("<") ? segment : (applyFrenchTypography(segment) ?? segment),
+    )
+    .join("")
 }
