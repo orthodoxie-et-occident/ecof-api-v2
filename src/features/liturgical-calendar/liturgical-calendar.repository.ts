@@ -1,11 +1,10 @@
 import { db } from "../../shared/db/client"
 
-export async function getSynaxarByDate(month: number, day: number) {
+export async function getSynaxarByIndex(sanctoralIndex: number) {
   const rows = await db`
         SELECT id, prefixe, saint, vies_id
         FROM synaxar
-        WHERE mois = ${month}
-        AND jour = ${day}
+        WHERE index = ${sanctoralIndex}
         ORDER BY id ASC
     `
   return rows || null
