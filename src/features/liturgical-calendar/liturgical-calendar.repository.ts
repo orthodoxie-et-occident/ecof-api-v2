@@ -3,7 +3,7 @@ import { db } from "../../shared/db/client"
 export async function getSynaxarByIndex(sanctoralIndex: number) {
   const rows = await db`
         SELECT id, prefixe, saint, vies_id
-        FROM synaxar
+        FROM sanctoral
         WHERE index = ${sanctoralIndex}
         ORDER BY id ASC
     `

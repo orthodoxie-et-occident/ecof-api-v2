@@ -14,7 +14,7 @@ type SynaxarRow = {
 export async function getSynaxar() {
   const rows = await db`
         SELECT saint, vies_id
-        FROM synaxar
+        FROM sanctoral
         WHERE calendrier != 2
         ORDER BY saint ASC
     `
@@ -32,7 +32,7 @@ export async function getVita(id: string) {
             s.jour, 
             s.prefixe, 
             s.saint
-        FROM synaxar s
+        FROM sanctoral s
         LEFT JOIN vita v ON v.vies_id = s.vies_id
         WHERE s.vies_id = ${id}
         LIMIT 1
