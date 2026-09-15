@@ -12,12 +12,12 @@
     "knip": "knip"
   },
   "dependencies": {
-    "hono": "^4.13.7",
+    "hono": "^4.13.8",
     "node-ical": "^0.27.2"
   },
   "devDependencies": {
     "@types/bun": "^1.4.2",
-    "@types/node": "^26.5.1",
+    "@types/node": "^26.6.0",
     "knip": "^6.35.1",
     "oxfmt": "^0.68.0",
     "oxlint": "^1.83.0"
