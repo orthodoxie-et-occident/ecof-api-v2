@@ -1,6 +1,6 @@
 import { Hono } from "hono"
 import { getSynaxar } from "./synaxar.repository"
-import { getVita } from "./synaxar.service"
+import { getVita, getSaintsByDate } from "./synaxar.service"
 
 export const synaxarRoutes = new Hono()
   // GET /synaxar
@@ -13,4 +13,10 @@ export const synaxarRoutes = new Hono()
     const id = c.req.param("id")
     const vita = await getVita(id)
     return c.json(vita)
+  })
+  // GET /synaxar/date/:date
+  .get("/date/:date", async (c) => {
+    const date = c.req.param("date")
+    const saints = await getSaintsByDate(date)
+    return c.json(saints)
   })

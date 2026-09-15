@@ -39,3 +39,14 @@ export async function getVita(id: string) {
     `
   return rows || null
 }
+
+export async function getSaintsByDate(sanctoralIndex: number) {
+  const rows = await db`
+      SELECT saint
+      FROM sanctoral
+      WHERE calendrier != 2
+      AND index = ${sanctoralIndex}
+      ORDER BY id ASC
+    `
+  return rows || null
+}
